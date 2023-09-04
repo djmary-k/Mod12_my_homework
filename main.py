@@ -82,20 +82,6 @@ class Record:
         if phone_number not in self.phone:
             self.phone.append(phone_number)
 
-    def search(self, value):
-        try:
-            v = int(value)
-            if v in self.phone:#list!!!
-                return "Name matches: {self.name.value}" # повинен бути список результата пошуку
-            else:
-                return "No results for: {value}"
-        except ValueError:
-            if value in self.name.value:
-                return "Name matches: {sel}" # повинен бути список результата пошуку
-            else:
-                return "No results for: {value}"
-
-
     def delete_phone(self, phone):
         self.phone.remove(phone)
 
@@ -126,6 +112,23 @@ class AddressBook(UserDict):
     
     def find_record(self, value):
         return self.data.get(value)
+    
+    def search(self, value):
+        try:
+            v = int(value)
+            if v in self.phone:#list!!!
+                return "Name matches: {self.name.value}" # повинен бути список результата пошуку
+            else:
+                return "No results for: {value}"
+        except ValueError:
+            result = ''
+            for cont in self.data.values():                
+                if value in cont.name.value:
+                    result += f'{cont}\n'
+            return result
+        else:
+            return f"No results for: {value}"
+
     
     def iterator(self, n) -> list[dict]:
         contact_list = []  # список записів контактів
@@ -276,7 +279,8 @@ if __name__ == "__main__":
     # print(ab.data.values())
     # print([val for val in ab.data.values()])
 
-    print()
+    # print(ab.find_record('Mary'))
+    print(ab.search('ar'))
 
     print('All Ok)')
 
