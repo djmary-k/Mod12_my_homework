@@ -111,25 +111,19 @@ class AddressBook(UserDict):
         # {‘Bill’: “Bill 0987777 22.09.2000”} - результат add_record
     
     def find_record(self, value):
-        return self.data.get(value)
-    
-    def search(self, value):
-        try:
-            v = int(value)
-            if v in self.phone:#list!!!
-                return "Name matches: {self.name.value}" # повинен бути список результата пошуку
-            else:
-                return "No results for: {value}"
-        except ValueError:
-            result = ''
-            for cont in self.data.values():                
-                if value in cont.name.value:
-                    result += f'{cont}\n'
-            return result
-        else:
-            return f"No results for: {value}"
+        return self.data.get(value)    
 
-    
+    def search(self, value):
+        result = []
+        for cont in self.data.values():
+            for ph in cont.phone:
+                if value in str(ph.value):
+                    result.append(f'{cont}')
+                        
+            if value in cont.name.value:
+                    result.append(f'{cont}')
+        return result if result != [] else f"No results for: {value}"        
+
     def iterator(self, n) -> list[dict]:
         contact_list = []  # список записів контактів
         if n:
@@ -138,16 +132,6 @@ class AddressBook(UserDict):
             contact_list.append(record)
         return self.__next__(contact_list)
     
-    # def __iter__(self):
-    #     return self
-    
-    # def __next__(self):
-    #     self.count += 1
-    #     if self.count > len(self.data):
-    #         raise StopIteration
-    #     else:
-    #         return self.data[list(self.data.keys())[self.count-1]]
-
     def __iter__(self, contact_list: list[dict]):
         n_list = []
         counter = 0
@@ -210,12 +194,12 @@ if __name__ == "__main__":
     ab = AddressBook()
     ab.add_record(rec)
     rec.add_phone(380999876543)
-    print(ab)
-    print(rec)
-    print(type(rec))
-    print(rec.name.value)
-    print([ph.value for ph in rec.phone])
-    print(rec.birthday.value)
+    # print(ab)
+    # print(rec)
+    # print(type(rec))
+    # print(rec.name.value)
+    # print([ph.value for ph in rec.phone])
+    # print(rec.birthday.value)
     # print(rec.days_to_birthday(datetime(1990, 8, 3)))
     
     # record contac 2
@@ -243,17 +227,17 @@ if __name__ == "__main__":
     
     """Додамо контактів для перевірки ітератора"""
     name = Name('Bob')
-    phone = Phone(123456789012)
+    phone = Phone(343456789012)
     birthday = Birthday(datetime(1980, 1, 31))
     rec2 = Record(name, phone, birthday)
 
     name = Name('Tom')
-    phone = Phone(123456789012)
+    phone = Phone(433456789015)
     birthday = Birthday(datetime(1992, 12, 13))
     rec3 = Record(name, phone, birthday)
 
     name = Name('Bard')
-    phone = Phone(123456789012)
+    phone = Phone(153455789062)
     birthday = Birthday(datetime(2000, 4, 10))
     rec4 = Record(name, phone, birthday)
 
@@ -269,16 +253,8 @@ if __name__ == "__main__":
     # ab_from_file = ab.read_from_file('mod12_ab_mary.bin')
     # print(ab_from_file)
 
-    print(ab)
-    print(rec4)
-    # print(type(rec))
-    # print(rec.name.value)
-    print([ph.value for ph in rec.phone])
-    # print(rec.birthday.value)
-
-    # print(ab.data.values())
-    # print([val for val in ab.data.values()])
-
+    """Пошук вмісту книги контактів"""
+    # print(ab)
     # print(ab.find_record('Mary'))
     print(ab.search('ar'))
 
