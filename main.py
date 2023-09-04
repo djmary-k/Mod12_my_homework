@@ -91,21 +91,10 @@ class Record:
                 return "No results for: {value}"
         except ValueError:
             if value in self.name.value:
-                return "Name matches: {self.name.value}" # повинен бути список результата пошуку
+                return "Name matches: {sel}" # повинен бути список результата пошуку
             else:
                 return "No results for: {value}"
 
-    # def find_phone(self, value):
-    #     if value in self.phone:
-    #         return "Name matches: {self.name.value}" # повинен бути список результата пошуку
-    #     else:
-    #         return "No results for: {value}"
-
-    # def find_name(self, value):
-    #     if value in self.name.value:
-    #         return "Name matches: {self.name.value}" # повинен бути список результата пошуку
-    #     else:
-    #         return "No results for: {value}"
 
     def delete_phone(self, phone):
         self.phone.remove(phone)
@@ -217,17 +206,22 @@ if __name__ == "__main__":
     rec = Record(name, phone, birthday)
     ab = AddressBook()
     ab.add_record(rec)
+    rec.add_phone(380999876543)
     print(ab)
-    # print(rec.birthday.value)
+    print(rec)
+    print(type(rec))
+    print(rec.name.value)
+    print([ph.value for ph in rec.phone])
+    print(rec.birthday.value)
     # print(rec.days_to_birthday(datetime(1990, 8, 3)))
-    # print(rec.phone)
+    
     # record contac 2
     name2 = Name('Mary')
     phone2 = Phone(987654321012)
     birthday2 = Birthday(datetime(1993, 9, 25))
     rec2 = Record(name2, phone2, birthday2)
     ab.add_record(rec2)
-    print(ab)
+    # print(ab)
     # print(rec2.birthday.value)
     # print(rec2.days_to_birthday(datetime(1993, 9, 25)))
     # print(rec2.phone)
@@ -266,11 +260,25 @@ if __name__ == "__main__":
 
     # ab.iterator(n=3)
 
-    print(ab)
+    # print(ab)
     # ab.save_to_table('mod12_ab_mary.csv')
-    ab.save_to_file('mod12_ab_mary.bin')
-    ab_from_file = ab.read_from_file('mod12_ab_mary.bin')
-    print(ab_from_file)
+    # ab.save_to_file('mod12_ab_mary.bin')
+    # ab_from_file = ab.read_from_file('mod12_ab_mary.bin')
+    # print(ab_from_file)
+
+    print(ab)
+    print(rec4)
+    # print(type(rec))
+    # print(rec.name.value)
+    print([ph.value for ph in rec.phone])
+    # print(rec.birthday.value)
+
+    # print(ab.data.values())
+    # print([val for val in ab.data.values()])
+
+    print()
 
     print('All Ok)')
 
+
+# cont = {'Bill': 'Bill 0987777 22.09.2000', 'Mary': 'Mary 0995553312 17.06.2002', 'Sasha': 'Sasha 0635678910 22.09.2000'}
